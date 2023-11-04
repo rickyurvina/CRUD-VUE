@@ -11,6 +11,17 @@ const props = defineProps({
     changeFavName: Function
 })
 
+const emit=defineEmits(['getData'])
+
+
+const deleteAppointment = async () => {
+    try {
+        const res = await axios.delete(`http://localhost:8000/api/appointment/${props.id}`);
+        emit('getData')
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 </script>
 
@@ -41,7 +52,7 @@ const props = defineProps({
                     <button type="button" class="btn btn-outline-primary mr-6">Ver</button>
                 </router-link>
 
-                <button type="button" class="btn btn-danger">
+                <button type="button" class="btn btn-danger" @click="deleteAppointment">
                     <i class="fas fas-trash">
                         Eliminar
                     </i>

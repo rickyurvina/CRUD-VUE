@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 
 const route=useRoute()
+
+const router=useRouter()
 
 const appointment = ref([])
 
@@ -16,6 +18,19 @@ const getAppointment = async () => {
     }
 }
 
+const goHome = () => {
+    router.push('/')
+}
+
+const deleteAppointment = async () => {
+    try {
+        const res = await axios.delete(`http://localhost:8000/api/appointment/${route.params.id}`);
+        appointment.value = await res.data
+        goHome()    
+    } catch (error) {
+        console.log(error)
+    }
+}
 onMounted(() => {
     getAppointment()
 })
@@ -39,7 +54,7 @@ onMounted(() => {
                     </div>
                     <div class="card-footer">
                         <router-link to="/" class="btn btn-secondary">Back</router-link>
-                        <button class="btn btn-danger mr-auto">Eliminar</button>
+                        <button class="btn btn-danger mr-auto" @click="deleteAppointment">Eliminar</button>
                     </div>
                 </div>
             </div>

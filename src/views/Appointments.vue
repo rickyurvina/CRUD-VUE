@@ -61,6 +61,7 @@ onMounted(() => {
 //   }
 // }
 
+
 const getData = async () => {
   loading.value = true
   try {
@@ -101,7 +102,8 @@ const getData = async () => {
 
     <AppointmentItem class="mb-2 mt-2 p-4" v-for="(appointment, index) in appointments.slice(start, end)" :key="index"
       :name="appointment.name" :id="appointment.id" :symptom="appointment.symptom" :email="appointment.email"
-      :phone="appointment.phone" :changeFavName="changeFav" />
+      :phone="appointment.phone" 
+      @getData="getData" />
 
   </div>
 </template>
